@@ -1,30 +1,23 @@
-class LinkedNode {
-  data: number;
-  next: LinkedNode | null;
-  constructor(data: number) {
-    this.data = data;
-    this.next = null;
+function balancedBracket(expression: string): boolean {
+  const stack: string[] = [];
+  let openingExpressions: string[] = ['{', '[', '('];
+  let matchingBrackets: Record<string, string> = {
+    '}': '{',
+    ']': '[',
+    ')': '(',
+  };
+
+  for (let i: number = 0; i < expression.length; i++) {
+    if (openingExpressions.indexOf(expression[i]) !== -1)
+      stack.push(expression[i]);
+    if (expression[i] in matchingBrackets) {
+      const matchBrac = stack.pop();
+      if (matchBrac !== matchingBrackets[expression[i]]) return false;
+    }
   }
+
+  return stack.length === 0;
 }
 
-const hasCycle = (node: LinkedNode | null): boolean => {
-  if (!node && !node.next) return false;
-
-  let slow = node;
-  let fast = node;
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (fast === slow) return true;
-  }
-  return false;
-};
-
-const node1 = new LinkedNode(1);
-const node2 = new LinkedNode(2);
-const node3 = new LinkedNode(3);
-node1.next = node2;
-node2.next = node3;
-node3.next = node2; // Creating a cycle
-
-console.log(hasCycle(node1));
+const targetExpression: string = '([{}])]';
+console.log(balancedBracket(targetExpression));
