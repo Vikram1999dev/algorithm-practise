@@ -1,21 +1,28 @@
-function balancedBracket(expression) {
-    var stack = [];
-    var openingExpressions = ['{', '[', '('];
-    var matchingBrackets = {
-        '}': '{',
-        ']': '[',
-        ')': '('
-    };
-    for (var i = 0; i < expression.length; i++) {
-        if (openingExpressions.indexOf(expression[i]) !== -1)
-            stack.push(expression[i]);
-        if (expression[i] in matchingBrackets) {
-            var matchBrac = stack.pop();
-            if (matchBrac !== matchingBrackets[expression[i]])
-                return false;
-        }
+var LinkedNode = /** @class */ (function () {
+    function LinkedNode(data) {
+        this.data = data;
+        this.next = null;
     }
-    return stack.length === 0;
-}
-var targetExpression = '([{}])]';
-console.log(balancedBracket(targetExpression));
+    return LinkedNode;
+}());
+var findKthEle = function (head, k) {
+    if (!head)
+        return null;
+    var length = 0;
+    var temp = head;
+    while (temp) {
+        length++;
+        temp = temp.next;
+    }
+    temp = head;
+    for (var i = 0; i < length - k; i++) {
+        temp = temp.next;
+    }
+    return temp;
+};
+var temp = new LinkedNode(1);
+temp.next = new LinkedNode(2);
+temp.next.next = new LinkedNode(3);
+temp.next.next.next = new LinkedNode(4);
+temp.next.next.next.next = new LinkedNode(5);
+console.log(findKthEle(temp, 2));
