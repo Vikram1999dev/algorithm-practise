@@ -1,28 +1,13 @@
-var LinkedNode = /** @class */ (function () {
-    function LinkedNode(data) {
-        this.data = data;
-        this.next = null;
+var montonicStack = function (arr) {
+    var stack = [];
+    stack.push(arr[0]);
+    for (var i = 0; i < arr.length; i++) {
+        while (stack.length > 0 && stack[stack.length - 1] < arr[i]) {
+            stack.pop();
+        }
+        stack.push(arr[i]);
     }
-    return LinkedNode;
-}());
-var findKthEle = function (head, k) {
-    if (!head)
-        return null;
-    var length = 0;
-    var temp = head;
-    while (temp) {
-        length++;
-        temp = temp.next;
-    }
-    temp = head;
-    for (var i = 0; i < length - k; i++) {
-        temp = temp.next;
-    }
-    return temp;
+    return stack;
 };
-var temp = new LinkedNode(1);
-temp.next = new LinkedNode(2);
-temp.next.next = new LinkedNode(3);
-temp.next.next.next = new LinkedNode(4);
-temp.next.next.next.next = new LinkedNode(5);
-console.log(findKthEle(temp, 2));
+var numbers = [8, 6, 3, 1, 2, 4, 9, 7, 5];
+console.log(montonicStack(numbers));
