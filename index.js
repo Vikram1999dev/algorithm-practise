@@ -1,13 +1,17 @@
-var montonicStack = function (arr) {
-    var stack = [];
-    stack.push(arr[0]);
+var nextGreaterElement = function (arr) {
+    var result = [];
     for (var i = 0; i < arr.length; i++) {
-        while (stack.length > 0 && stack[stack.length - 1] < arr[i]) {
-            stack.pop();
-        }
-        stack.push(arr[i]);
+        result.push(-1);
     }
-    return stack;
+    var stack = [];
+    for (var i = 0; i < 2 * arr.length; i++) {
+        var cirIndex = i % arr.length;
+        while (stack.length > 0 && arr[stack[stack.length - 1]] < arr[cirIndex]) {
+            result[stack.pop()] = arr[cirIndex];
+        }
+        stack.push(cirIndex);
+    }
+    return result;
 };
-var numbers = [8, 6, 3, 1, 2, 4, 9, 7, 5];
-console.log(montonicStack(numbers));
+var arr = [2, 5, -3, -4, 6, 7, 2];
+console.log(nextGreaterElement(arr));

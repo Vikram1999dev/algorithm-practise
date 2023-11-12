@@ -1,14 +1,18 @@
-var montonicStack = (arr: number[]): number[] => {
-  let stack: number[] = [];
-  stack.push(arr[0]);
+var nextGreaterElement = (arr: number[]): number[] => {
+  let result: number[] = [];
   for (let i: number = 0; i < arr.length; i++) {
-    while (stack.length > 0 && stack[stack.length - 1] < arr[i]) {
-      stack.pop();
-    }
-    stack.push(arr[i]);
+    result.push(-1);
   }
-  return stack;
+  let stack: number[] = [];
+  for (let i: number = 0; i < 2 * arr.length; i++) {
+    let cirIndex = i % arr.length;
+    while (stack.length > 0 && arr[stack[stack.length - 1]] < arr[cirIndex]) {
+      result[stack.pop() as number] = arr[cirIndex];
+    }
+    stack.push(cirIndex);
+  }
+  return result;
 };
 
-let numbers: number[] = [8, 6, 3, 1, 2, 4, 9, 7, 5];
-console.log(montonicStack(numbers));
+let arr: number[] = [2, 5, -3, -4, 6, 7, 2];
+console.log(nextGreaterElement(arr));
