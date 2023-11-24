@@ -1,18 +1,30 @@
-var nextGreaterElement = (arr: number[]): number[] => {
-  let result: number[] = [];
-  for (let i: number = 0; i < arr.length; i++) {
-    result.push(-1);
+class LinkedNode {
+  data: number;
+  next: LinkedNode | null;
+  constructor(data: number) {
+    this.data = data;
+    this.next = null;
   }
-  let stack: number[] = [];
-  for (let i: number = 0; i < 2 * arr.length; i++) {
-    let cirIndex = i % arr.length;
-    while (stack.length > 0 && arr[stack[stack.length - 1]] < arr[cirIndex]) {
-      result[stack.pop() as number] = arr[cirIndex];
-    }
-    stack.push(cirIndex);
+}
+
+var reverseLinkedList = (head: LinkedNode | null): LinkedNode | null => {
+  if (!head) return head;
+  let prev: LinkedNode | null = null;
+  let curr: LinkedNode | null = head;
+  let forr: LinkedNode | null = null;
+  while (curr) {
+    forr = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = forr;
   }
-  return result;
+  // console.log(prev);
+  head = prev;
+  return head;
 };
 
-let arr: number[] = [2, 5, -3, -4, 6, 7, 2];
-console.log(nextGreaterElement(arr));
+let head = new LinkedNode(1);
+head.next = new LinkedNode(2);
+head.next.next = new LinkedNode(3);
+head.next.next.next = new LinkedNode(4);
+console.log(reverseLinkedList(head));

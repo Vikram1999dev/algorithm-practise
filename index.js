@@ -1,17 +1,28 @@
-var nextGreaterElement = function (arr) {
-    var result = [];
-    for (var i = 0; i < arr.length; i++) {
-        result.push(-1);
+var LinkedNode = /** @class */ (function () {
+    function LinkedNode(data) {
+        this.data = data;
+        this.next = null;
     }
-    var stack = [];
-    for (var i = 0; i < 2 * arr.length; i++) {
-        var cirIndex = i % arr.length;
-        while (stack.length > 0 && arr[stack[stack.length - 1]] < arr[cirIndex]) {
-            result[stack.pop()] = arr[cirIndex];
-        }
-        stack.push(cirIndex);
+    return LinkedNode;
+}());
+var reverseLinkedList = function (head) {
+    if (!head)
+        return head;
+    var prev = null;
+    var curr = head;
+    var forr = null;
+    while (curr) {
+        forr = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = forr;
     }
-    return result;
+    // console.log(prev);
+    head = prev;
+    return head;
 };
-var arr = [2, 5, -3, -4, 6, 7, 2];
-console.log(nextGreaterElement(arr));
+var head = new LinkedNode(1);
+head.next = new LinkedNode(2);
+head.next.next = new LinkedNode(3);
+head.next.next.next = new LinkedNode(4);
+console.log(reverseLinkedList(head));
