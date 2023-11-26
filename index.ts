@@ -7,24 +7,47 @@ class LinkedNode {
   }
 }
 
-var reverseLinkedList = (head: LinkedNode | null): LinkedNode | null => {
-  if (!head) return head;
-  let prev: LinkedNode | null = null;
-  let curr: LinkedNode | null = head;
-  let forr: LinkedNode | null = null;
-  while (curr) {
-    forr = curr.next;
-    curr.next = prev;
-    prev = curr;
-    curr = forr;
+const intersectionLkNde = (
+  head1: LinkedNode | null,
+  head2: LinkedNode | null,
+): LinkedNode | null => {
+  if (!head1 || !head2) {
+    return null;
   }
-  // console.log(prev);
-  head = prev;
-  return head;
+
+  let ptr1: LinkedNode = head1;
+  let ptr2: LinkedNode = head2;
+
+  while (ptr1 !== ptr2) {
+    ptr1 = ptr1.next;
+    ptr2 = ptr2.next;
+    if (ptr1 === ptr2) {
+      return ptr1;
+    }
+    if (!ptr1) {
+      ptr1 = head2;
+    }
+
+    if (!ptr2) {
+      ptr2 = head1;
+    }
+  }
+
+  return ptr1;
 };
 
-let head = new LinkedNode(1);
-head.next = new LinkedNode(2);
-head.next.next = new LinkedNode(3);
-head.next.next.next = new LinkedNode(4);
-console.log(reverseLinkedList(head));
+// let newNode:LinkedNode|null;
+let head1 = new LinkedNode(1);
+head1.next = new LinkedNode(2);
+head1.next.next = new LinkedNode(3);
+head1.next.next.next = new LinkedNode(4);
+head1.next.next.next.next = new LinkedNode(5);
+head1.next.next.next.next.next = new LinkedNode(6);
+
+let head2 = new LinkedNode(1.1);
+head2.next = new LinkedNode(2.2);
+head2.next.next = new LinkedNode(3.3);
+head2.next.next.next = new LinkedNode(4.4);
+head2.next.next.next.next = head1.next.next.next;
+
+console.log(intersectionLkNde(head1, head2));
