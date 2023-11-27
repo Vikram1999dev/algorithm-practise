@@ -1,14 +1,30 @@
-var maxSumWithWindow = function (arr, windowSize) {
-    var windowSum = 0;
-    for (var i = 0; i < windowSize; i++) {
-        windowSum += arr[i];
+var mergeOverlappingIntervals = function (intervals) {
+    var result = [];
+    if (intervals.length <= 1) {
+        return intervals;
     }
-    var maxSum = windowSum;
-    var temp = 0;
-    for (var i = windowSize; i < arr.length; i++) {
-        windowSum = windowSum + arr[i] - arr[i - windowSize];
-        maxSum = Math.max(maxSum, windowSum);
+    intervals.sort(function (a, b) { return a[0] - b[0]; });
+    var previous = intervals[0];
+    for (var i = 1; i < intervals.length; i++) {
+        if (previous[1] >= intervals[i][0]) {
+            previous = [
+                Math.min(previous[0], intervals[i][0]),
+                Math.max(previous[1], intervals[i][1]),
+            ];
+        }
+        else {
+            result.push(previous);
+            previous = intervals[i];
+        }
     }
-    return maxSum;
+    result.push(previous);
+    return result;
 };
-console.log(maxSumWithWindow([1, 4, 2, 10, 2, 3, 1, 0, 20], 4));
+var theArrs = [
+    [1, 3],
+    [9, 12],
+    [2, 6],
+    [8, 13],
+    [15, 18],
+];
+console.log(mergeOverlappingIntervals(theArrs));
