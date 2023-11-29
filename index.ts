@@ -1,5 +1,6 @@
 const firstNegativeNumber = (arr: number[], k: number): number[] => {
   let negativeEle: number[] = [];
+  //arr.length - k + 1 is no of position of window in its entirety
   for (let i: number = 0; i < arr.length - k + 1; i++) {
     let foundNegative = false;
     for (let j: number = 0; j < k; j++) {
