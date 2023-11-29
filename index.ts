@@ -1,46 +1,51 @@
-class IslandCounter {
-  private explore(island: number[][], row: number, col: number): void {
-    const h: number = island.length;
-    const w: number = island[0].length;
-
-    if (row < 0 || col < 0 || col >= w || row >= h || island[row][col] === 0) {
-      return;
-    }
-
-    island[row][col] = 0; // Mark the cell as visited
-    this.explore(island, row - 1, col);
-    this.explore(island, row + 1, col);
-    this.explore(island, row, col - 1);
-    this.explore(island, row, col + 1);
-  }
-
-  countIslands(island: number[][]): number {
-    const h: number = island.length;
-    const w: number = island[0].length;
-    let result: number = 0;
-
-    for (let i = 0; i < h; i++) {
-      for (let j = 0; j < w; j++) {
-        if (island[i][j] === 1) {
-          result++;
-          this.explore(island, i, j);
-        }
-      }
-    }
-
-    return result;
+class BSTNode {
+  data: number;
+  left: BSTNode | null;
+  right: BSTNode | null;
+  constructor(data: number) {
+    this.data = data;
+    this.left = null;
+    this.right = null;
   }
 }
 
-// Example usage:
-const islandCounter = new IslandCounter();
+var minVal = (node: BSTNode): number => {
+  let temp: BSTNode = node;
+  while (temp.left !== null) {
+    temp = temp.left;
+  }
+  return temp.data;
+};
 
-const islandGrid: number[][] = [
-  [1, 1, 0, 0, 0],
-  [1, 1, 0, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 1],
-];
+var bstDeletion = (root: BSTNode | null, ele: number): BSTNode | null => {
+  if (!root) {
+    return null;
+  }
+  if (ele > root.data) {
+    root.right = bstDeletion(root.right, ele);
+  } else if (ele < root.data) {
+    root.left = bstDeletion(root.left, ele);
+  } else {
+    if (!root.left) {
+      return root.right;
+    } else if (!root.right) {
+      return root.left;
+    } else {
+      root.data = minVal(root.right);
+      root.right = bstDeletion(root.right, root.data);
+    }
+  }
 
-const numberOfIslands = islandCounter.countIslands(islandGrid);
-console.log(`Number of islands: ${numberOfIslands}`);
+  return root;
+};
+
+var root: BSTNode | null = new BSTNode(8);
+root.left = new BSTNode(6);
+root.left.left = new BSTNode(5);
+root.left.right = new BSTNode(7);
+root.right = new BSTNode(19);
+root.right.right = new BSTNode(20);
+root.right.left = new BSTNode(10);
+root.right.left.right = new BSTNode(15);
+
+console.log(bstDeletion(root, 19));
