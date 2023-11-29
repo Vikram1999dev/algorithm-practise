@@ -1,48 +1,19 @@
-var BSTNode = /** @class */ (function () {
-    function BSTNode(data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
+var firstNegativeNumber = function (arr, k) {
+    var negativeEle = [];
+    for (var i = 0; i < arr.length - k + 1; i++) {
+        var foundNegative = false;
+        for (var j = 0; j < k; j++) {
+            if (arr[i + j] < 0) {
+                negativeEle.push(arr[i + j]);
+                foundNegative = true;
+                break;
+            }
+        }
+        if (!foundNegative) {
+            negativeEle.push(0); // If no negative number is found in the window, push 0.
+        }
     }
-    return BSTNode;
-}());
-var minVal = function (node) {
-    var temp = node;
-    while (temp.left !== null) {
-        temp = temp.left;
-    }
-    return temp.data;
+    return negativeEle;
 };
-var bstDeletion = function (root, ele) {
-    if (!root) {
-        return null;
-    }
-    if (ele > root.data) {
-        root.right = bstDeletion(root.right, ele);
-    }
-    else if (ele < root.data) {
-        root.left = bstDeletion(root.left, ele);
-    }
-    else {
-        if (!root.left) {
-            return root.right;
-        }
-        else if (!root.right) {
-            return root.left;
-        }
-        else {
-            root.data = minVal(root.right);
-            root.right = bstDeletion(root.right, root.data);
-        }
-    }
-    return root;
-};
-var root = new BSTNode(8);
-root.left = new BSTNode(6);
-root.left.left = new BSTNode(5);
-root.left.right = new BSTNode(7);
-root.right = new BSTNode(19);
-root.right.right = new BSTNode(20);
-root.right.left = new BSTNode(10);
-root.right.left.right = new BSTNode(15);
-console.log(bstDeletion(root, 19));
+var arr = [1, -3, 6, -9, 4, 5, -66, 1, 4, -5, -2];
+console.log(firstNegativeNumber(arr, 4));
