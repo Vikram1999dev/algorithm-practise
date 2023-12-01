@@ -1,19 +1,24 @@
-var firstNegativeNumber = function (arr, k) {
-    var negativeEle = [];
-    for (var i = 0; i < arr.length - k + 1; i++) {
-        var foundNegative = false;
-        for (var j = 0; j < k; j++) {
-            if (arr[i + j] < 0) {
-                negativeEle.push(arr[i + j]);
-                foundNegative = true;
-                break;
-            }
+var minimumSumSubarray = function (arr) {
+    var stack = [];
+    var result = 0;
+    var sumMini = function (stack, arr) {
+        var sum = 0;
+        for (var idx in stack) {
+            sum += arr[idx];
         }
-        if (!foundNegative) {
-            negativeEle.push(0); // If no negative number is found in the window, push 0.
+        return sum;
+    };
+    for (var i = 0; i <= arr.length; i++) {
+        while (stack.length > 0 &&
+            (i === arr.length || arr[i] < arr[stack[stack.length - 1]])) {
+            var poppedIndex = stack.pop();
+            var minimumSum = sumMini(stack, arr);
+            result +=
+                arr[poppedIndex] * (i - poppedIndex) * (arr[poppedIndex] + minimumSum);
         }
+        stack.push(i);
     }
-    return negativeEle;
+    return result;
 };
-var arr = [1, -3, 6, -9, 4, 5, -66, 1, 4, -5, -2];
-console.log(firstNegativeNumber(arr, 4));
+var arr = [3, 2, 1];
+console.log(minimumSumSubarray(arr));

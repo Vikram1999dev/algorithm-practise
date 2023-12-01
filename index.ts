@@ -1,21 +1,28 @@
-const firstNegativeNumber = (arr: number[], k: number): number[] => {
-  let negativeEle: number[] = [];
-  //arr.length - k + 1 is no of position of window in its entirety
-  for (let i: number = 0; i < arr.length - k + 1; i++) {
-    let foundNegative = false;
-    for (let j: number = 0; j < k; j++) {
-      if (arr[i + j] < 0) {
-        negativeEle.push(arr[i + j]);
-        foundNegative = true;
-        break;
-      }
+var minimumSumSubarray = (arr: number[]): number => {
+  let stack: number[] = [];
+  let result: number = 0;
+  var sumMini = (stack: number[], arr: number[]): number => {
+    let sum = 0;
+    for (const idx in stack) {
+      sum += arr[idx];
     }
-    if (!foundNegative) {
-      negativeEle.push(0); // If no negative number is found in the window, push 0.
+    return sum;
+  };
+
+  for (let i = 0; i <= arr.length; i++) {
+    while (
+      stack.length > 0 &&
+      (i === arr.length || arr[i] < arr[stack[stack.length - 1]])
+    ) {
+      let poppedIndex: number = stack.pop();
+      let minimumSum = sumMini(stack, arr);
+      result +=
+        arr[poppedIndex] * (i - poppedIndex) * (arr[poppedIndex] + minimumSum);
     }
+    stack.push(i);
   }
-  return negativeEle;
+  return result;
 };
 
-let arr: number[] = [1, -3, 6, -9, 4, 5, -66, 1, 4, -5, -2];
-console.log(firstNegativeNumber(arr, 4));
+let arr: number[] = [3, 2, 1];
+console.log(minimumSumSubarray(arr));
