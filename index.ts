@@ -1,28 +1,31 @@
-var minimumSumSubarray = (arr: number[]): number => {
-  let stack: number[] = [];
-  let result: number = 0;
-  var sumMini = (stack: number[], arr: number[]): number => {
-    let sum = 0;
-    for (const idx in stack) {
-      sum += arr[idx];
-    }
-    return sum;
-  };
+// you are given an array of integers, and the goal is
+// to find the longest subarray (contiguous subsequence)
+// whose elements sum up to a specific target value,
+// denoted as K.
 
-  for (let i = 0; i <= arr.length; i++) {
-    while (
-      stack.length > 0 &&
-      (i === arr.length || arr[i] < arr[stack[stack.length - 1]])
-    ) {
-      let poppedIndex: number = stack.pop();
-      let minimumSum = sumMini(stack, arr);
-      result +=
-        arr[poppedIndex] * (i - poppedIndex) * (arr[poppedIndex] + minimumSum);
+var lengthLongestSubarr = (arr: number[], k: number): number => {
+  let i: number = 0,
+    j: number = 0;
+  let max: number = -Infinity;
+  let sum: number = 0;
+  while (j < arr.length) {
+    sum = sum + arr[j];
+    if (sum < k) {
+      j++;
+    } else if (sum === k) {
+      max = Math.max(max, j - i + 1);
+      j++;
+    } else if (sum > k) {
+      while (sum > k) {
+        sum = sum - arr[i];
+        i++;
+      }
+      j++;
     }
-    stack.push(i);
   }
-  return result;
+  return max;
 };
 
-let arr: number[] = [3, 2, 1];
-console.log(minimumSumSubarray(arr));
+let arr = [8, 6, 5, 2, 7, 1, 3, 1, 9];
+let k = 14;
+console.log(lengthLongestSubarr(arr, k));
