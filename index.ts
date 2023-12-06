@@ -29,10 +29,14 @@ const branchSums = (
     return [];
   }
   sum += root.data;
+  //if we reached final node
   if (!root.left && !root.right) {
     sums.push(sum);
   }
 
+  //if there is still node on left side and
+  //when it will comeback the addition made
+  //in future will have no value
   if (root.left) {
     branchSums(root.left, sum, sums);
   }
