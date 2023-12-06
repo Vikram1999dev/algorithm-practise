@@ -1,3 +1,14 @@
+//   1
+// /   \
+// 2    3
+// / \
+// 4  5
+
+// Path from root to leaf with values 1 -> 2 -> 4: 1 + 2 + 4 = 7
+// Path from root to leaf with values 1 -> 2 -> 5: 1 + 2 + 5 = 8
+// Path from root to leaf with values 1 -> 3: 1 + 3 = 4
+// So, the branch sums for this binary tree are 7, 8, and 4.
+
 class TreeNode {
   data: number;
   left: TreeNode | null;
@@ -9,29 +20,29 @@ class TreeNode {
   }
 }
 
-const findClosest = (
+const branchSums = (
   root: TreeNode | null,
-  k: number,
-  closest: number,
-): number => {
+  sum: number,
+  sums: number[],
+): number[] => {
   if (!root) {
-    return closest;
+    return [];
+  }
+  sum += root.data;
+  if (!root.left && !root.right) {
+    sums.push(sum);
   }
 
-  if (Math.abs(k - closest) > Math.abs(k - root.data)) {
-    closest = root.data;
+  if (root.left) {
+    branchSums(root.left, sum, sums);
+  }
+  if (root.right) {
+    branchSums(root.right, sum, sums);
   }
 
-  if (k > root.data) {
-    return findClosest(root.right, k, closest);
-  } else if (k < root.data) {
-    return findClosest(root.left, k, closest);
-  } else {
-    return closest;
-  }
+  return sums;
 };
 
-// Creating a BST with 15 nodes
 let root = new TreeNode(10);
 root.left = new TreeNode(5);
 root.right = new TreeNode(15);
@@ -48,4 +59,4 @@ root.right.left.right = new TreeNode(14);
 root.right.right.left = new TreeNode(17);
 root.right.right.right = new TreeNode(20);
 
-console.log(findClosest(root, 18, Infinity));
+console.log(branchSums(root, 0, []));
