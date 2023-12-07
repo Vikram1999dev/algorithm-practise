@@ -1,12 +1,3 @@
-//   1
-// /   \
-// 2    3
-// / \
-// 4  5
-// Path from root to leaf with values 1 -> 2 -> 4: 1 + 2 + 4 = 7
-// Path from root to leaf with values 1 -> 2 -> 5: 1 + 2 + 5 = 8
-// Path from root to leaf with values 1 -> 3: 1 + 3 = 4
-// So, the branch sums for this binary tree are 7, 8, and 4.
 var TreeNode = /** @class */ (function () {
     function TreeNode(data) {
         this.data = data;
@@ -15,25 +6,10 @@ var TreeNode = /** @class */ (function () {
     }
     return TreeNode;
 }());
-var branchSums = function (root, sum, sums) {
-    if (!root) {
-        return [];
-    }
-    sum += root.data;
-    //if we reached final node
-    if (!root.left && !root.right) {
-        sums.push(sum);
-    }
-    //if there is still node on left side and
-    //when it will comeback the addition made
-    //in future will have no value
-    if (root.left) {
-        branchSums(root.left, sum, sums);
-    }
-    if (root.right) {
-        branchSums(root.right, sum, sums);
-    }
-    return sums;
+var treeDepth = function (root, level) {
+    if (!root)
+        return 0;
+    return (level + treeDepth(root.left, level + 1) + treeDepth(root.right, level + 1));
 };
 var root = new TreeNode(10);
 root.left = new TreeNode(5);
@@ -50,4 +26,4 @@ root.right.left.left = new TreeNode(11);
 root.right.left.right = new TreeNode(14);
 root.right.right.left = new TreeNode(17);
 root.right.right.right = new TreeNode(20);
-console.log(branchSums(root, 0, []));
+console.log(treeDepth(root, 0));
