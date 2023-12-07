@@ -1,29 +1,14 @@
-var TreeNode = /** @class */ (function () {
-    function TreeNode(data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
+// Given two non-empty arrays of integers, array and sequence, write a function that
+// determines whether the sequence is a valid subsequence of the array.
+// A subsequence of an array is a set of numbers that appear in the same order as
+// they appear in the array, but not necessarily consecutively.
+var validSubsequence = function (arr, sequence) {
+    var j = 0;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === sequence[j]) {
+            j++;
+        }
     }
-    return TreeNode;
-}());
-var treeDepth = function (root, level) {
-    if (!root)
-        return 0;
-    return (level + treeDepth(root.left, level + 1) + treeDepth(root.right, level + 1));
+    return j === sequence.length;
 };
-var root = new TreeNode(10);
-root.left = new TreeNode(5);
-root.right = new TreeNode(15);
-root.left.left = new TreeNode(3);
-root.left.right = new TreeNode(8);
-root.right.left = new TreeNode(12);
-root.right.right = new TreeNode(18);
-root.left.left.left = new TreeNode(2);
-root.left.left.right = new TreeNode(4);
-root.left.right.left = new TreeNode(7);
-root.left.right.right = new TreeNode(9);
-root.right.left.left = new TreeNode(11);
-root.right.left.right = new TreeNode(14);
-root.right.right.left = new TreeNode(17);
-root.right.right.right = new TreeNode(20);
-console.log(treeDepth(root, 0));
+console.log(validSubsequence([5, 1, 22, 25, 6, -1, 8, 10, 12, 60, 40, 30, 20, 45], [22, 6, 8, 12, 40, 30]));
