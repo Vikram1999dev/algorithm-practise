@@ -1,27 +1,23 @@
-// Design an algorithm to arrange a class photo of students
-// in a way that maximizes visual aesthetics and ensures everyone is clearly visible.
+//Write a function that returns the maximum possible total speed or the minimum
+//possible total speed of all of the tandem bicycles being ridden based on an
+//input parameter,fastest.If fastest=true,your function should return the maximum
+// possible total speed;otherwise it should return minimum total speed
 
-const classPhotos = (red: number[], blue: number[]) => {
+var tandemCycle = (red: number[], blue: number[], fastest: boolean): number => {
   red.sort((a, b) => a - b);
   blue.sort((a, b) => a - b);
-  let redColor: boolean = true;
-  let blueColor: boolean = true;
+  let sum: number = 0;
 
   for (let i: number = 0; i < red.length; i++) {
-    if (red[i] <= blue[i]) {
-      redColor = false;
-      break;
-    }
-
-    if (red[i] >= blue[i]) {
-      blueColor = false;
-      break;
-    }
+    sum += fastest
+      ? Math.max(red[i], blue[blue.length - 1 - i])
+      : Math.max(red[i], blue[i]);
   }
 
-  return redColor || blueColor;
+  return sum;
 };
-let redShirtHeight: number[] = [5, 2, 3, 9, 11, 7, 3, 6];
-let blueShirtHeight: number[] = [14, 2, 3, 1, 7, 8, 9, 4];
 
-console.log(classPhotos(redShirtHeight, blueShirtHeight));
+let redShirtSpeed = [5, 5, 3, 9, 2];
+let blueShirtSpeed = [3, 6, 7, 2, 1];
+let fastest = false;
+console.log(tandemCycle(redShirtSpeed, blueShirtSpeed, fastest));
