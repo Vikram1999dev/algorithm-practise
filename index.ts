@@ -1,26 +1,27 @@
-//Write a function that returns the minimum amount of total waiting time for
-//all of the queries.For example, if you are given the queries of durations
-//[1,4,5],then the total waiting time if the queries were executed
-//would be (0) + (1) + (1 + 4).
-//The first query duration 1 would be executed immediately, so its waiting
-//time would be 0
-//the duration of query is given in the array but to start executing the
-//any query it takes 0 seconds
+// Design an algorithm to arrange a class photo of students
+// in a way that maximizes visual aesthetics and ensures everyone is clearly visible.
 
-//executing the shortest query first is what will lead to the minimum
-//waiting time because all queries after it again will wait the minimum
-// amount of time before they are executed
+const classPhotos = (red: number[], blue: number[]) => {
+  red.sort((a, b) => a - b);
+  blue.sort((a, b) => a - b);
+  let redColor: boolean = true;
+  let blueColor: boolean = true;
 
-const minimumWaitingTime = (arr: number[]): number => {
-  let i: number = 0,
-    j: number = arr.length - 1;
-  let sum: number = 0;
-  while (j > 0) {
-    sum += j * arr[i];
-    i++;
-    j--;
+  for (let i: number = 0; i < red.length; i++) {
+    if (red[i] <= blue[i]) {
+      redColor = false;
+      break;
+    }
+
+    if (red[i] >= blue[i]) {
+      blueColor = false;
+      break;
+    }
   }
-  return sum;
-};
 
-console.log(minimumWaitingTime([1, 2, 2, 3, 6]));
+  return redColor || blueColor;
+};
+let redShirtHeight: number[] = [5, 2, 3, 9, 11, 7, 3, 6];
+let blueShirtHeight: number[] = [14, 2, 3, 1, 7, 8, 9, 4];
+
+console.log(classPhotos(redShirtHeight, blueShirtHeight));
