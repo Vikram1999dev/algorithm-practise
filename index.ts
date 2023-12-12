@@ -1,34 +1,20 @@
-class LinkedNode {
-  data: number;
-  next: LinkedNode | null;
-  constructor(data: number) {
-    this.data = data;
-    this.next = null;
-  }
-}
-
-const removeDuplicate = (head: LinkedNode | null): LinkedNode | null => {
-  if (!head) {
-    return null;
-  }
-  let temp = head;
-  while (temp.next) {
-    if (temp.data === temp.next.data) {
-      temp.next = temp.next.next;
+const binarySearch = (arr: number[], target: number): number => {
+  arr.sort((a, b) => a - b);
+  let start: number = 0,
+    end: number = arr.length - 1;
+  let mid: number;
+  while (start <= end) {
+    mid = start + Math.floor((end - start) / 2);
+    console.log('something', mid);
+    if (arr[mid] === target) {
+      return mid; // returning the index instead of the value
+    } else if (arr[mid] > target) {
+      end = mid - 1;
     } else {
-      temp = temp.next;
+      start = mid + 1;
     }
   }
-  return head;
+  return -1;
 };
 
-let head = new LinkedNode(1);
-head.next = new LinkedNode(2);
-head.next.next = new LinkedNode(2);
-head.next.next.next = new LinkedNode(4);
-head.next.next.next.next = new LinkedNode(5);
-head.next.next.next.next.next = new LinkedNode(5);
-head.next.next.next.next.next.next = new LinkedNode(6);
-console.log(head);
-console.log(head.next.next);
-console.log(removeDuplicate(head));
+console.log(binarySearch([1, 2, 4, 3, 11, 13, 15, 5, 6, 12], 6));

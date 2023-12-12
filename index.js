@@ -1,32 +1,20 @@
-var LinkedNode = /** @class */ (function () {
-    function LinkedNode(data) {
-        this.data = data;
-        this.next = null;
-    }
-    return LinkedNode;
-}());
-var removeDuplicate = function (head) {
-    if (!head) {
-        return null;
-    }
-    var temp = head;
-    while (temp.next) {
-        if (temp.data === temp.next.data) {
-            temp.next = temp.next.next;
+var binarySearch = function (arr, target) {
+    arr.sort(function (a, b) { return a - b; });
+    var start = 0, end = arr.length - 1;
+    var mid;
+    while (start <= end) {
+        mid = start + Math.floor((end - start) / 2);
+        console.log('something', mid);
+        if (arr[mid] === target) {
+            return mid; // returning the index instead of the value
+        }
+        else if (arr[mid] > target) {
+            end = mid - 1;
         }
         else {
-            temp = temp.next;
+            start = mid + 1;
         }
     }
-    return head;
+    return -1;
 };
-var head = new LinkedNode(1);
-head.next = new LinkedNode(2);
-head.next.next = new LinkedNode(2);
-head.next.next.next = new LinkedNode(4);
-head.next.next.next.next = new LinkedNode(5);
-head.next.next.next.next.next = new LinkedNode(5);
-head.next.next.next.next.next.next = new LinkedNode(6);
-console.log(head);
-console.log(head.next.next);
-console.log(removeDuplicate(head));
+console.log(binarySearch([1, 2, 4, 3, 11, 13, 15, 5, 6, 12], 6));
