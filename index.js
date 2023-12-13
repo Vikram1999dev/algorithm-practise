@@ -1,19 +1,13 @@
-var threeLargestNumbers = function (arr) {
-    var large = -Infinity, larger = -Infinity, largest = -Infinity;
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] > largest) {
-            large = larger;
-            larger = largest;
-            largest = arr[i];
+var palindromeCheck = function (word) {
+    var i = 0, j = word.length - 1;
+    while (i <= j) {
+        if (word[i] !== word[j]) {
+            return false;
         }
-        else if (arr[i] > larger) {
-            large = larger;
-            larger = arr[i];
-        }
-        else if (arr[i] > large) {
-            large = arr[i];
-        }
+        j--;
+        i++;
     }
-    return [large, larger, largest];
+    return true;
 };
-console.log(threeLargestNumbers([1, 2, 5, 4, 9, 6, 3, 7, 8, 11, 15, 36]));
+var s = 'nammann';
+console.log(palindromeCheck(s));

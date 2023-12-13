@@ -1,21 +1,15 @@
-const threeLargestNumbers = (arr: number[]): number[] => {
-  let large: number = -Infinity,
-    larger: number = -Infinity,
-    largest: number = -Infinity;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > largest) {
-      large = larger;
-      larger = largest;
-      largest = arr[i];
-    } else if (arr[i] > larger) {
-      large = larger;
-      larger = arr[i];
-    } else if (arr[i] > large) {
-      large = arr[i];
+const palindromeCheck = (word: string): boolean => {
+  let i: number = 0,
+    j: number = word.length - 1;
+  while (i <= j) {
+    if (word[i] !== word[j]) {
+      return false;
     }
+    j--;
+    i++;
   }
-
-  return [large, larger, largest];
+  return true;
 };
 
-console.log(threeLargestNumbers([1, 2, 5, 4, 9, 6, 3, 7, 8, 11, 15, 36]));
+let s = 'nammann';
+console.log(palindromeCheck(s));
