@@ -1,20 +1,19 @@
-var binarySearch = function (arr, target) {
-    arr.sort(function (a, b) { return a - b; });
-    var start = 0, end = arr.length - 1;
-    var mid;
-    while (start <= end) {
-        mid = start + Math.floor((end - start) / 2);
-        console.log('something', mid);
-        if (arr[mid] === target) {
-            return mid; // returning the index instead of the value
+var threeLargestNumbers = function (arr) {
+    var large = -Infinity, larger = -Infinity, largest = -Infinity;
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] > largest) {
+            large = larger;
+            larger = largest;
+            largest = arr[i];
         }
-        else if (arr[mid] > target) {
-            end = mid - 1;
+        else if (arr[i] > larger) {
+            large = larger;
+            larger = arr[i];
         }
-        else {
-            start = mid + 1;
+        else if (arr[i] > large) {
+            large = arr[i];
         }
     }
-    return -1;
+    return [large, larger, largest];
 };
-console.log(binarySearch([1, 2, 4, 3, 11, 13, 15, 5, 6, 12], 6));
+console.log(threeLargestNumbers([1, 2, 5, 4, 9, 6, 3, 7, 8, 11, 15, 36]));

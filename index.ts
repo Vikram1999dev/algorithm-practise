@@ -1,20 +1,21 @@
-const binarySearch = (arr: number[], target: number): number => {
-  arr.sort((a, b) => a - b);
-  let start: number = 0,
-    end: number = arr.length - 1;
-  let mid: number;
-  while (start <= end) {
-    mid = start + Math.floor((end - start) / 2);
-    console.log('something', mid);
-    if (arr[mid] === target) {
-      return mid; // returning the index instead of the value
-    } else if (arr[mid] > target) {
-      end = mid - 1;
-    } else {
-      start = mid + 1;
+const threeLargestNumbers = (arr: number[]): number[] => {
+  let large: number = -Infinity,
+    larger: number = -Infinity,
+    largest: number = -Infinity;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > largest) {
+      large = larger;
+      larger = largest;
+      largest = arr[i];
+    } else if (arr[i] > larger) {
+      large = larger;
+      larger = arr[i];
+    } else if (arr[i] > large) {
+      large = arr[i];
     }
   }
-  return -1;
+
+  return [large, larger, largest];
 };
 
-console.log(binarySearch([1, 2, 4, 3, 11, 13, 15, 5, 6, 12], 6));
+console.log(threeLargestNumbers([1, 2, 5, 4, 9, 6, 3, 7, 8, 11, 15, 36]));
