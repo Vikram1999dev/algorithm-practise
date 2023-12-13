@@ -1,15 +1,13 @@
-const palindromeCheck = (word: string): boolean => {
-  let i: number = 0,
-    j: number = word.length - 1;
-  while (i <= j) {
-    if (word[i] !== word[j]) {
-      return false;
-    }
-    j--;
-    i++;
+const caesarCipherEncryptor = (word: string, key: number): string => {
+  let stringArr: string[] = [];
+  for (let i: number = 0; i < word.length; i++) {
+    let ccode = (word.charCodeAt(i) - 97 + key) % 26;
+    stringArr.push(String.fromCharCode(ccode + 97));
   }
-  return true;
+  return stringArr.join('');
 };
 
-let s = 'nammann';
-console.log(palindromeCheck(s));
+let word: string = 'abc';
+let key: number = 5;
+
+console.log(caesarCipherEncryptor(word, key));
