@@ -1,28 +1,14 @@
-//You are given a string of available characters and a
-//string representing a document that you need to generate
-//You are only able to generate the document if the frequency
-//of unique characters in the characters string is greater than or equal
-//to the frequency of unique characters in the document string
-var generateDocument = function (str, document) {
+var firstRepeatingCharacter = function (str) {
     var maps = {};
-    for (var _i = 0, s_1 = s; _i < s_1.length; _i++) {
-        var char = s_1[_i];
-        maps[char] = (maps[char] || 0) + 1;
+    for (var i = 0; i < str.length; i++) {
+        maps[str[i]] = (maps[str[i]] || 0) + 1;
     }
-    console.log(maps);
-    for (var i = 0; i < document.length; i++) {
-        if (maps[document[i]]) {
-            if (maps[document[i]] === 0) {
-                return false;
-            }
-            maps[document]--;
-        }
-        else {
-            return false;
+    for (var i = 0; i < str.length; i++) {
+        if (maps[str[i]] === 1) {
+            return str[i];
         }
     }
-    return true;
+    return '';
 };
-var s = 'Bstehetsi ogEAxpelrt x ';
-var d = 'AlgoExpert is the Best!';
-console.log(generateDocument(s, d));
+var s = 'abcdcaf';
+console.log(firstRepeatingCharacter(s));
